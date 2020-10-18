@@ -1,17 +1,13 @@
 ---
-output:
-  pdf_document: default
-  html_document: default
----
 title: "Housing Market Strategy Research"
 author: "Names of your Group Members"
 date: "Due Date"
 output:
-  html_document:
-    df_print: paged
+  pdf_document: default
+  html_document: default
 ---
 
-```{r setup, warning=FALSE, message=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 library(tidyverse)
@@ -40,11 +36,8 @@ gss_rent <- gss_rent %>%
            ifelse(own_rent=="Rented, even if no cash rent is paid", 0, 1)) 
 ```
 
-
-## Title of your Report
-
-# Name(s) of Author(s) 
-# Date
+*Code and data supporting this analysis is available at:* \
+https://github.com/ElricL/Housing-Market-Strategy.git
 
 ## Abstract
 
@@ -56,13 +49,15 @@ Here is where you should give insight into the setting and introduce the goal of
 
 ## Data
 
-Introduce the data, explain why it was selected. Make sure to comment on important features and highlight any potential drawbacks to the data.
+[Introduce the data, explain why it was selected. Make sure to comment on important features and highlight any potential drawbacks to the data.]
 
 ```{r, warning=FALSE, message=FALSE}
 ggplot(data=gss_rent, aes(x=own_rent)) + 
       geom_bar(aes(y = (..count..)/sum(..count..))) + labs(title = "Ownership Frequency", x = "Owned or rented", y = "Frequency") +
   coord_flip() + scale_x_discrete(labels=c("Not Owned", "Owned"))
 ```
+
+__Figure 1:__ We are interested in finding common characteristics from house owners and non-owners (i.e. what makes a person likely go to each bar), to build a strategy in finding new potential customers)
 
 ## Model
 Model:
@@ -82,3 +77,11 @@ summary(gss_logit) %>% pander
 ```
 
 ## Results
+
+## Discussion
+
+## Weaknesses
+
+## Next Steps
+
+## References:
