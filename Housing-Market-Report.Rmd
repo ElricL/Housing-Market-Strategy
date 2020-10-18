@@ -73,10 +73,18 @@ gss_logit <- svyglm(paid_cash_on_rent ~ as.factor(income_family) + total_childre
                     gss.design, family="binomial")
 
 
-summary(gss_logit) %>% pander
+
 ```
 
+\pagebreak
+
 ## Results
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+summary(gss_logit)$coeff %>% pander
+```
+__Figure []:__ Key statistical summaries of the logistic regression model.
+
+\pagebreak
 
 ## Discussion
 
