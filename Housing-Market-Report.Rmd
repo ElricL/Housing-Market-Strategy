@@ -1,0 +1,84 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+title: "Housing Market Strategy Research"
+author: "Names of your Group Members"
+date: "Due Date"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+library(tidyverse)
+library(survey)
+#library.packages('pander) <- uncomment me
+library(pander)
+
+## CLEAN DATA
+gss <- read.csv(file = 'gss.csv')
+gss_rent <- gss %>% select(total_children, own_rent, 
+                           average_hours_worked, income_family, age, marital_status)
+# Remove NAs
+gss_rent <- gss_rent %>% 
+  drop_na(total_children) %>%
+  drop_na(own_rent) %>%
+  drop_na(marital_status)
+# Set NAs to 0 for hours worked
+gss_rent <- gss_rent %>% drop_na(average_hours_worked)
+# Remove those who don't know how much they work 
+# and don't know if they are paying rent
+gss_rent <- filter(gss_rent, average_hours_worked != "Don't know")
+gss_rent <- filter(gss_rent, own_rent != "Don't know")
+
+gss_rent <- gss_rent %>% 
+  mutate(paid_cash_on_rent = 
+           ifelse(own_rent=="Rented, even if no cash rent is paid", 0, 1)) 
+```
+
+
+## Title of your Report
+
+# Name(s) of Author(s) 
+# Date
+
+## Abstract
+
+Here is where you give a brief (one paragraph overview of your entire paper). This should include some background/introduction, some methodology, results and conclusions.
+
+## Introduction
+
+Here is where you should give insight into the setting and introduce the goal of the analysis. Here you can introduce ideas and basic concepts regarding the study setting and the potential model. Again, this is the introduction, so you should be explaining the importance of the work that is ahead and hopefully build some suspense for the reader. You can also highlight what will be included in the subsequent sections.
+
+## Data
+
+Introduce the data, explain why it was selected. Make sure to comment on important features and highlight any potential drawbacks to the data.
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(data=gss_rent, aes(x=own_rent)) + 
+      geom_bar(aes(y = (..count..)/sum(..count..))) + labs(title = "Ownership Frequency", x = "Owned or rented", y = "Frequency") +
+  coord_flip() + scale_x_discrete(labels=c("Not Owned", "Owned"))
+```
+
+## Model
+Model:
+```{r, warning=FALSE, message=FALSE}
+n=length(gss_rent$income_family)
+N=36708083 - 1941873 - 2021564 - 1948681
+
+fpc.srs = rep(N, n)
+
+gss.design <- svydesign(id=~1, data=gss_rent, fpc=fpc.srs)
+
+gss_logit <- svyglm(paid_cash_on_rent ~ as.factor(income_family) + total_children + age + as.factor(average_hours_worked) + as.factor(marital_status),
+                    gss.design, family="binomial")
+
+
+summary(gss_logit) %>% pander
+```
+
+## Results
