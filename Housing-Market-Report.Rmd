@@ -1,10 +1,12 @@
 ---
-title: "Housing Market Strategy Research"
+title: "Housing Market Strategy Research in Canada"
 author: "Elric Lazaro, Kaiyue Wu, Mengxin Zhao, Zikun Lei"
 date: "10/19/2020"
+header-includes:
+   - \usepackage{amsmath}
 output:
-  pdf_document: default
-  html_document: default
+  pdf_document:
+    df_print : kable
 ---
 
 ```{r setup, include=FALSE}
@@ -12,8 +14,9 @@ knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 library(tidyverse)
 library(survey)
-#library.packages('pander) <- uncomment me
+#library.packages('pander') <- uncomment me to install pander
 library(pander)
+library(kableExtra)
 
 ## CLEAN DATA
 gss <- read.csv(file = 'gss.csv')
@@ -32,28 +35,40 @@ gss_rent <- filter(gss_rent, average_hours_worked != "Don't know")
 gss_rent <- filter(gss_rent, own_rent != "Don't know")
 
 gss_rent <- gss_rent %>% 
-  mutate(paid_cash_on_rent = 
+  mutate(own_or_not = 
            ifelse(own_rent=="Rented, even if no cash rent is paid", 0, 1)) 
 ```
 
 *Code and data supporting this analysis is available at:* \
-https://github.com/ElricL/Housing-Market-Strategy.git
+https://github.com/ElricL/Housing-Market-Strategy.git 
 
 ## Abstract
 
-Here is where you give a brief (one paragraph overview of your entire paper). This should include some background/introduction, some methodology, results and conclusions.
+|       While doing business, it is important to determine the target customers. In this study, a logistic regression model is runned to explore the relation of (looking for an elegant expression of “whether one owns the house one is living in or one’s family member does” or not) to one’s features. It turns out that people’s age and family income levels are the most significant factors that affect people’s (same expression...). The real estate agents can use this result to effectively find and locate target customers.
 
 ## Introduction
 
-Here is where you should give insight into the setting and introduce the goal of the analysis. Here you can introduce ideas and basic concepts regarding the study setting and the potential model. Again, this is the introduction, so you should be explaining the importance of the work that is ahead and hopefully build some suspense for the reader. You can also highlight what will be included in the subsequent sections.
+|       Business is between dealers and customers. If the potential target customers are found, the whole process would be much more efficient. The same rule applies to real estates. In the housing market, there are usually two types of customers - one looks to rent, and the other one looks to purchase a house. During the current COVID-19 period, people are less optimistic towards the housing market, and they might not be able to consult with the agents regarding their concerns. Under this situation, it is rather important for real estates agents to know whether the customers prefer renting or owning a house, so that they can target the potential customers and provide better services to increase the chances of getting the trade done. 
+|       In this study, the relationship of people’s housing preferences to their age, marital status, income, number of total children, average hours of work and income will be investigated, based on the data from General Social Survey on Family, year of 2017. 
+|       In this report, we will first explain how the sample data was collected, and specify the explanatory and response variable. Next, we will fit a logistic regression model, and will analyze the results and discuss the model’s usage in reality. At the end, we will point out some limitations of our model and provide a plan for the next steps. 
+
 
 ## Data
 
-[Introduce the data, explain why it was selected. Make sure to comment on important features and highlight any potential drawbacks to the data.]
+|       General Social Survey on Family, year of 2017 was selected among the Canadian General Social Survey program. It is used to gather data, thus can be used to monitor changes in Canada and provide information on social policy issues. Among all the survey,. Family is closely related to people’s living conditions and therefore, the surveys on this topic are informative. Based on further inspection with the 2017 survey, we have discovered that it was given to people aged 16 or older. [insert population, the frame, and the sample.]
+|       From the 2017 dataset we have selected own_rent, income_family, total_children, age, average_hours_worked, and marital_status. Based on the label dictionary obtained along with the data, each variables represent the following:
+__own_rent - "Dwelling - Owned or rented"__
+age - "Age of respondent with decimal at time of the survey interview"
+Marital_status - "Marital status of the respondent"
+Total_children - "Total number of children reported by respondent"
+average_hours_worked - "Average number of hours worked per week"
+income_family - "Family income - Total (before tax)”
+|       With these variables we believe, they would provide useful insights with our goal of finding potential target customers in the housing market. Specifically we would want to see the chances of one to own a place (own_rent) based on the answers given in the other variables. Discovering correlation or independence can both provide useful insights to our research. Along with the data, we have also taken into account the total population of Canada subtracted by the total population of people aged 14 or younger. These numbers will help the model we will be using to analyze the effects of the characteristics chosen on own_rent.
+|       The raw data of General Social Survey 2017 (GSS 2017) was obtained from CHASS. which was then processed and cleaned using a R script code written by Rohan Alexander and Sam Caetano from University of Toronto. Further modifications consist of extracting our variables of observation from the cleaned GSS data to a separate table and removing uninterpretable answers. These unusable answers mainly consist of ‘NA’ and ‘Don’t know’ values. Unfortunately, these examples were abundant, resulting in the sample size decreasing to almost half the original size. Also important to note that they may still be integral but given their ambiguity, there’s currently no way to assess them at the moment. To properly use own_rent in our model, we have simplified it to whether they own their place (1) or not (0). Therefore, instead of categorical, we have a new column own_or_not that can be interpreted as a boolean, a variable that either gives true or false. More on the significance of this change can be found in the model. To help visualize the data a bit more, here is a simple plot of the number of people that owns a house and those that dont:
 
 ```{r, warning=FALSE, message=FALSE}
 ggplot(data=gss_rent, aes(x=own_rent)) + 
-      geom_bar(aes(y = (..count..)/sum(..count..))) + labs(title = "Ownership Frequency", x = "Owned or rented", y = "Frequency") +
+      geom_bar(aes(y = (..count..)/sum(..count..))) + labs(title = "Ownership Frequency", x = "Owned or Not", y = "Frequency") +
   coord_flip() + scale_x_discrete(labels=c("Not Owned", "Owned"))
 ```
 
@@ -69,27 +84,83 @@ fpc.srs = rep(N, n)
 
 gss.design <- svydesign(id=~1, data=gss_rent, fpc=fpc.srs)
 
-gss_logit <- svyglm(paid_cash_on_rent ~ as.factor(income_family) + total_children + age + as.factor(average_hours_worked) + as.factor(marital_status),
+gss_logit <- svyglm(own_or_not ~ as.factor(income_family) + total_children + age + as.factor(average_hours_worked) + as.factor(marital_status),
                     gss.design, family="binomial")
-
-
-
 ```
+
+Rstudio is used to run the following  logistic regression model
+
+\begin{align*}
+log(\frac{(p)}{1-(p)}) &= {\beta}_0 + 
+                            {\beta}_1X_{income_family : \$125000 and more} + \\
+                        &    {\beta}_2X_{income_family : \$25000 to \$49999} + 
+                            {\beta}_3X_{income_family : \$50000 to \$74999} + \\
+                        &    {\beta}_4X_{income_family : \$75000 to \$99999} + 
+                            {\beta}_5X_{income_family : less than \$25000} + \\
+                        &    {\beta}_6X_{total_children} + 
+                            {\beta}_7X_{age} + \\
+                        &    {\beta}_8X_{average_hours_worked : 0.1 to 29.9 hours} + 
+                           {\beta}_9X_{average_hours_worked : 30.0 to 40.0 hours} + \\
+                        &    {\beta}_{10}X_{average_hours_worked : 40.1 to 50.0 hours} + 
+                            {\beta}_{11}X_{average_hours_worked : 50.1 hours and more} + \\
+                        &    {\beta}_{12}X_{marital_status : Living common-law} + 
+                            {\beta}_{13}X_{marital_status : Married} + \\
+                        &    {\beta}_{14}X_{marital_status : Separated} + 
+                            {\beta}_{15}X_{marital_status : Single, never married} + \\
+                        &    {\beta}_{16}X_{marital_status : Widowed} 
+\end{align*}
+
+|       Subscripts of X are names of predictor variables or the category if one predictor is categorical. And every $\beta$ is the slope of the corresponding feature. The value of each $\beta$ is listed in the table in the result part.
+|       The population size is set to be $36708083 - 1941873 - 2021564 - 1948681 = 32595965$. Where $36708083$ is the capital population of Canada in 2017. $1941873$, $2021564$, $1948681$ are populations in the 0~4 years,5~9 years and 10~14 years age groups, respectively. Canadians in those age groups are excluded since every individual was at the age of 15 or above at the moment they took the survey. And so the result cannot represent Canadians in the 0~15 years age group.
+|       Four features are added into this model as predictor variables and own_or_not is created based on own_rent and be added as dependent variable. There are a few alternatives for age but age is the only numerical variable among them. Choosing age would make the model more smooth.
+|       The model is mathematically straightforward and the dependent variable, own_or_not, is boolean and numerical. It is mathematically straightforward for two reasons. The first reason is that $f(p) = log(\frac{p}{1-p})$ is strictly increasing on $(0,1)$. Its derivative is $f’(p) = \frac{1}{p(1-p)^2 >0 }$ on $p\in (0,1)$ where the probability is usually defined on. And a strictly positive derivative implies that whenever $f(p_1) \geq f(p_2)$, we have $p_1 \geq p_2$. So after sub in two sets of conditions, the one with higher outcome indicates that one under that set of conditions is more likely to own a house. No explicit computation is required to compare the actual probability.The second reason is that, by the property of the logarithm function, $log(\frac{p}{1-p}) \geq 0$ if and only if $\frac{p}{1-p} \geq 1$ if and only if $p \geq \frac{1}{2}$. Thus we can tell if one under a set of conditions is likely to own a house by comparing the value of the dependent variable with 0 given those conditions.
+|       One limitation of the logistic regression model is that the relation between the dependent variable and features is assumed to be linear. However, a model would still be fitted regardless of the linearity between the dependent variable and features, and a fitted model is inaccurate if the relation is not linear.
+
 
 \pagebreak
 
 ## Results
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-summary(gss_logit)$coeff %>% pander
+kable(summary(gss_logit)$coeff) %>%
+  kable_styling(full_width = F)
 ```
-__Figure []:__ Key statistical summaries of the logistic regression model.
+__Figure 2:__ Key statistical summaries of the logistic regression model. \
 
-\pagebreak
+Results here...
 
 ## Discussion
 
+|       Among all the features, being married, being widowed, and having $125,000 and more yearly income appear to be the most positively influential factors. Married couples do have a higher chance to own a house, since the financial burden is lighter for two people, and they need to prepare for life with kids later on. The widowed men and women used to be in the same situation. It also makes sense for people with higher income to own a house. 
+|       In contrast, having yearly income less than $25,000, from $25,000 to $49,999 the most negatively influential factors. For the people who have low income, they probably cannot afford to purchase a house. Renting becomes their only option. Having low working time also implies that they might not have a high income with such a low workload. 
+|       In conclusion, the model estimates whether people’s preferences are leaning towards renting or purchasing a house based on their features. The marital status and income appear to be the most influential factors. Real estates agents can use this model to estimate the preferences in order to better target the potential customers. 
+
 ## Weaknesses
+
+|       Data is presumed to be real and accurate at the moment when the data was collected. However, there’s a possibility that some of the data may be inaccurate and exaggerate due to personal bias. Also, since the data we chose are from 2017, data may be outdated and results may vary. There’s a chance that results can not be repeated and reflect well in 2020 due to the large outbreak of COVID-19.
+|       Further details of secondary data is not available. This limits what we can find out. We will have to do further research and surveys to determine potential lurking variables. The choice of owning a place or not may not translate well in this data to certain edge-case scenarios. For instance, a person who would want/willing to have their own place may not have the choice as they are under a limited work contract that forces them to travel a lot. Such a person can still be labelled as a ‘potential customer’ or at least ‘future potential customer’ but given their current situation, they would not be in this study. Unfortunately the current dataset does not provide enough information for these edge-cases. Thus we must take the results we have gained from this analysis as more of a rough estimate than a conclusion.
+|       Finite population correction is used to build the model. The weight of different age groups in Canada are not evenly distributed. But in data_design the weight is set to be equal for each row in the data set. This can have some impact on our model’s standard error. In simpler terms accuracy of our data could potentially be negatively impacted as a result.
+|       Rows that have “Don’t know” as average work hours or own rent are dropped since it is hard to interpret. However, doing so filters out some features. There are many occupations, including, but not limited to, freelancers, seasonal work and part time jobs that usually do not require fixed working hours. And people doing those jobs might answer “Don’t know”. As a result, such transformation could influence some bias to the data. Similar problem arises when rows that have “Don’t know” as family net income are dropped. 
 
 ## Next Steps
 
+|       As previously mentioned there's the possibility of lurking variables that we have yet to observe. Therefore a similar analysis will need to be conducted on various other datasets outside of GSS.
+|       The data and the analysis performed is a summarization of Canada as a whole. While this is an important start, the housing market varies in different geological areas around Canada. To look into this we would need to perform a different model in the spirit of stratified sampling where we would need to analyze the likelihood of place ownership in different regions.
+|       Another step we would need to take is to look into the edge cases mentioned in the weaknesses section. Due to the complexity and the fact that we currently do not have a grasp of the amount of common cases there are various surveys will need to be performed to have a better understanding. Depending on the results obtained, we could perform a similar model.
+|       As a result of the current pandemic in Canada and the whole world and its effect in today’s climate, this study would need to be repeated again in an updated General Social Survey on Family Data in 2020.
+
+
 ## References:
+
+
+1. General Social Survey: An Overview, 2019. (2019, February 20). Retrieved from https://www150.statcan.gc.ca/n1/pub/89f0115x/89f0115x2019001-eng.htm
+
+2. Tidyr. (n.d.). Retrieved from https://www.rdocumentation.org/packages/tidyr/versions/0.8.3/topics/drop_na
+
+3. Pander. (n.d.) Retrieved from
+https://www.rdocumentation.org/packages/pander/versions/0.6.3
+
+4. Alexander, R and Caetano, S. (2020, Oct 7). GSS.cleaning. Retrieved from U of T Quercus
+
+5. Government of Canada, S. C. (2018, March 27). Canada at a Glance 2018 Population. Retrieved from https://www150.statcan.gc.ca/n1/pub/12-581-x/2018000/pop-eng.htm
+  
+6. Government of Canada, Statistics Canada. (2020, September 29). Population estimates on July 1st, by age and sex. Retrieved from https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710000501
