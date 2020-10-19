@@ -14,8 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 library(tidyverse)
 library(survey)
-#library.packages('pander') <- uncomment me to install pander
-library(pander)
+#library.packages('kableExtra') <- uncomment me to install kableExtra if not already installed
 library(kableExtra)
 
 ## CLEAN DATA
