@@ -44,7 +44,7 @@ https://github.com/ElricL/Housing-Market-Strategy.git
 
 ## Abstract
 
-|       While doing business, it is important to determine the target customers. In this study, a logistic regression model is runned to explore the relation of (looking for an elegant expression of “whether one owns the house one is living in or one’s family member does” or not) to one’s features. It turns out that people’s age and family income levels are the most significant factors that affect people’s (same expression...). The real estate agents can use this result to effectively find and locate target customers.
+|       While doing business, it is important to determine the target customers. In this study, a logistic regression model is runned to explore the relation of (looking for an elegant expression of “whether one owns the house one is living in or one’s family member does” or not) to one’s features. It turns out that people’s age and family income levels are the most significant factors that affect people’s desirability in owning a house. The real estate agents can use this result to effectively find and locate target customers.
 
 ## Introduction
 
@@ -55,14 +55,15 @@ https://github.com/ElricL/Housing-Market-Strategy.git
 
 ## Data
 
-|       General Social Survey on Family, year of 2017 was selected among the Canadian General Social Survey program. It is used to gather data, thus can be used to monitor changes in Canada and provide information on social policy issues. Among all the survey,. Family is closely related to people’s living conditions and therefore, the surveys on this topic are informative. Based on further inspection with the 2017 survey, we have discovered that it was given to people aged 16 or older. [insert population, the frame, and the sample.]
+|       General Social Survey on Family, year of 2017 was selected among the Canadian General Social Survey program. It is used to gather data, thus can be used to monitor changes in Canada and provide information on social policy issues. Among all the survey. Family is closely related to people’s living conditions and therefore, the surveys on this topic are informative. Based on further inspection with the 2017 survey, we have discovered that it was given to people aged 16 or older. The population we seek to study is overall the whole population of Canada with the frame being those that took the GSS Survey, The sample we have in this study is all those that have answered the 2017 survey that have not filled in "NA" or "Don't know".
 |       From the 2017 dataset we have selected own_rent, income_family, total_children, age, average_hours_worked, and marital_status. Based on the label dictionary obtained along with the data, each variables represent the following:
-__own_rent - "Dwelling - Owned or rented"__
-age - "Age of respondent with decimal at time of the survey interview"
-Marital_status - "Marital status of the respondent"
-Total_children - "Total number of children reported by respondent"
-average_hours_worked - "Average number of hours worked per week"
-income_family - "Family income - Total (before tax)”
+* __own_rent - "Dwelling - Owned or rented"__
+* age - "Age of respondent with decimal at time of the survey interview"
+* Marital_status - "Marital status of the respondent"
+* Total_children - "Total number of children reported by respondent"
+* average_hours_worked - "Average number of hours worked per week"
+* income_family - "Family income - Total (before tax)” 
+
 |       With these variables we believe, they would provide useful insights with our goal of finding potential target customers in the housing market. Specifically we would want to see the chances of one to own a place (own_rent) based on the answers given in the other variables. Discovering correlation or independence can both provide useful insights to our research. Along with the data, we have also taken into account the total population of Canada subtracted by the total population of people aged 14 or younger. These numbers will help the model we will be using to analyze the effects of the characteristics chosen on own_rent.
 |       The raw data of General Social Survey 2017 (GSS 2017) was obtained from CHASS. which was then processed and cleaned using a R script code written by Rohan Alexander and Sam Caetano from University of Toronto. Further modifications consist of extracting our variables of observation from the cleaned GSS data to a separate table and removing uninterpretable answers. These unusable answers mainly consist of ‘NA’ and ‘Don’t know’ values. Unfortunately, these examples were abundant, resulting in the sample size decreasing to almost half the original size. Also important to note that they may still be integral but given their ambiguity, there’s currently no way to assess them at the moment. To properly use own_rent in our model, we have simplified it to whether they own their place (1) or not (0). Therefore, instead of categorical, we have a new column own_or_not that can be interpreted as a boolean, a variable that either gives true or false. More on the significance of this change can be found in the model. To help visualize the data a bit more, here is a simple plot of the number of people that owns a house and those that dont:
 
