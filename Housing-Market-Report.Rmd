@@ -129,22 +129,36 @@ log(\frac{(p)}{1-(p)}) &= {\beta}_0 +
 |       Subscripts of X are names of predictor variables or the category if one predictor is categorical. And every $\beta$ is the slope of the corresponding feature. The value of each $\beta$ is listed in the table in the result part.
 |       The population size is set to be $36708083 - 1941873 - 2021564 - 1948681 = 32595965$. Where $36708083$ is the capital population of Canada in 2017. $1941873$, $2021564$, $1948681$ are populations in the 0~4 years,5~9 years and 10~14 years age groups, respectively. Canadians in those age groups are excluded since every individual was at the age of 15 or above at the moment they took the survey. And so the result cannot represent Canadians in the 0~15 years age group.
 |       Four features are added into this model as predictor variables and own_or_not is created based on own_rent and be added as dependent variable. There are a few alternatives for age but age is the only numerical variable among them. Choosing age would make the model more smooth.
-|       The model is mathematically straightforward and the dependent variable, own_or_not, is boolean and numerical. It is mathematically straightforward for two reasons. The first reason is that $f(p) = log(\frac{p}{1-p})$ is strictly increasing on $(0,1)$. Its derivative is $f’(p) = \frac{1}{p(1-p)^2 >0 }$ on $p\in (0,1)$ where the probability is usually defined on. And a strictly positive derivative implies that whenever $f(p_1) \geq f(p_2)$, we have $p_1 \geq p_2$. So after sub in two sets of conditions, the one with higher outcome indicates that one under that set of conditions is more likely to own a house. No explicit computation is required to compare the actual probability.The second reason is that, by the property of the logarithm function, $log(\frac{p}{1-p}) \geq 0$ if and only if $\frac{p}{1-p} \geq 1$ if and only if $p \geq \frac{1}{2}$. Thus we can tell if one under a set of conditions is likely to own a house by comparing the value of the dependent variable with 0 given those conditions.
+|       The model is mathematically straightforward and the dependent variable, own_or_not, is boolean and numerical. It is mathematically straightforward for two reasons. The first reason is that $f(p) = log(\frac{p}{1-p})$ is strictly increasing on $(0,1)$. Its derivative is $f’(p) = \frac{1}{p(1-p)^2} > 0$ on $p\in (0,1)$ where the probability is usually defined on. And a strictly positive derivative implies that whenever $f(p_1) \geq f(p_2)$, we have $p_1 \geq p_2$. So after sub in two sets of conditions, the one with higher outcome indicates that one under that set of conditions is more likely to own a house. No explicit computation is required to compare the actual probability.The second reason is that, by the property of the logarithm function, $log(\frac{p}{1-p}) \geq 0$ if and only if $\frac{p}{1-p} \geq 1$ if and only if $p \geq \frac{1}{2}$. Thus we can tell if one under a set of conditions is likely to own a house by comparing the value of the dependent variable with 0 given those conditions.
+|       Most Importantly we can also first confirm if there is a relationship between our dependent variable own_or_not and our predictor variables. This can be achieved by obtaining the p-value of each variable in the regression model. The significance of the p-value is that it can tell us that if it has a value less than 0.05 then we can reject the null hypothesis being tested which is if the coefficient is equal to 0 or in other words has no effect.
 |       One limitation of the logistic regression model is that the relation between the dependent variable and features is assumed to be linear. However, a model would still be fitted regardless of the linearity between the dependent variable and features, and a fitted model is inaccurate if the relation is not linear.
 
 
 ## Results
-```{r, message=FALSE, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 kable(summary(gss_logit)$coeff) %>%
   kable_styling(full_width = F)
 ```
 __Figure 2:__ Key statistical summaries of the logistic regression model. \
 
-Results here...
+|       Before observing the relationships between our chosen predictor variables with whether they own a place or not, we must first confirm the existence of the relationship first. Upon close inspection of the table above that summarize the results of our model, we can see that the following variables have p-values greater than 0.05: all factors for average_hours_worked, and if their marital_status is ‘Separated’ or ‘Single’. This result tells us that we cannot reject the null hypothesis such that there is no effect. Therefore, the correlation between these variables with own_or_not is weak. 
+|       To see which Canadian is unlikely or likely to own a place we can check the estimate column. This column provides the coefficients for our logistic regression function specified in the beginning of the model section of this report. Specifically we can substitute the corresponding variable's $\beta$ symbol. When filling in the values we can observe that the probability of house ownership will decrease with factors that have negative estimates. Therefore we can conclude the following characteristics will decrease the chance of a person owning a place: having Family income of $\$0\: to\: \$99,999$. The rest of the independent variables have positive estimates and as such we can conclude that people who fall in such categories have a likelier outcome of owning a place. For instance, we can see in the plot below that the total house owners with family income of \$125,000 far exceeds the rest. This matches our finding that the factor of income_family of $\$125,000\: and\: more$ having a positive estimated value in comparison to the rest which have negative values.
+
+```{r, warning=FALSE, message=FALSE}
+gss_rent_income <- gss_rent %>% select(income_family, own_or_not) %>%  
+                    group_by(income_family) %>% 
+                    summarise(`total_own` = sum(`own_or_not`))
+ggplot(gss_rent_income, aes(x=income_family, y=total_own)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Family Income vs Ownership", x = "Family Income", y = "Total House Owners") +
+  geom_bar(stat="identity", fill="blue")
+```
+__Figure 3:__ Bar graph of number of house owners based on family income. \
+
 
 ## Discussion
 
-|       Among all the features, being married, being widowed, and having $125,000 and more yearly income appear to be the most positively influential factors. Married couples do have a higher chance to own a house, since the financial burden is lighter for two people, and they need to prepare for life with kids later on. The widowed men and women used to be in the same situation. It also makes sense for people with higher income to own a house. 
+|       Among all the features, being married, being widowed, and having $125,000 and more yearly income appear to be the most positively influential factors given their high estimate values. Married couples do have a higher chance to own a house, since the financial burden is lighter for two people, and they need to prepare for life with kids later on. The widowed men and women used to be in the same situation. It also makes sense for people with higher income to own a house. 
 |       In contrast, having yearly income less than $25,000, from $25,000 to $49,999 the most negatively influential factors. For the people who have low income, they probably cannot afford to purchase a house. Renting becomes their only option. Having low working time also implies that they might not have a high income with such a low workload. 
 |       In conclusion, the model estimates whether people’s preferences are leaning towards renting or purchasing a house based on their features. The marital status and income appear to be the most influential factors. Real estates agents can use this model to estimate the preferences in order to better target the potential customers. 
 
