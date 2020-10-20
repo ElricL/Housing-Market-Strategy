@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.19)  19 OCT 2020 23:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.19)  19 OCT 2020 23:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -675,38 +675,37 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 85.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 85.
-[1
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
+46.
+(c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [1
 
 {c:/Users/elric/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-52.
-(c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-Underfull \hbox (badness 10000) in paragraph at lines 239--242
+Underfull \hbox (badness 10000) in paragraph at lines 234--237
 
  []
 
-[2]
-<Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf, id=60, 469.755
+<Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf, id=54, 469.755
 pt x 325.215pt>
 File: Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf Graphic fi
 le (type pdf)
 <use Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: Housing-Market-Report_files/figure-latex/unnamed-chunk
--3-1.pdf  used on input line 246.
+-3-1.pdf  used on input line 241.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[2]
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 304.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 299.
 
 [3 <./Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf>]
-Overfull \hbox (14.34491pt too wide) in paragraph at lines 336--375
+Overfull \hbox (14.34491pt too wide) in paragraph at lines 331--370
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 377--379
+Underfull \hbox (badness 10000) in paragraph at lines 372--374
 
  []
 
@@ -717,15 +716,15 @@ File: Housing-Market-Report_files/figure-latex/unnamed-chunk-6-1.pdf Graphic fi
 le (type pdf)
 <use Housing-Market-Report_files/figure-latex/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: Housing-Market-Report_files/figure-latex/unnamed-chunk
--6-1.pdf  used on input line 409.
+-6-1.pdf  used on input line 404.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 409--412
+Underfull \hbox (badness 10000) in paragraph at lines 404--407
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 409--412
+Underfull \hbox (badness 10000) in paragraph at lines 404--407
 
  []
 
@@ -741,7 +740,7 @@ Here is how much of TeX's memory you used:
  28002 multiletter control sequences out of 15000+600000
  585083 words of font info for 70 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,11n,72p,255b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 66i,11n,72p,255b,386s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.e
 nc}{c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hsy.enc}{c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
@@ -760,7 +759,7 @@ ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/elric/AppData/Ro
 aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/elric/AppDa
 ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/elric/
 AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on Housing-Market-Report.pdf (7 pages, 244108 bytes).
+Output written on Housing-Market-Report.pdf (7 pages, 243895 bytes).
 PDF statistics:
  181 PDF objects out of 1000 (max. 8388607)
  154 compressed objects within 2 object streams
