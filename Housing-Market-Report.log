@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.19)  19 OCT 2020 21:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.19)  19 OCT 2020 23:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -684,29 +684,29 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
 (c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 238--241
+Underfull \hbox (badness 10000) in paragraph at lines 239--242
 
  []
 
-<Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf, id=54, 469.755
+[2]
+<Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf, id=60, 469.755
 pt x 325.215pt>
 File: Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf Graphic fi
 le (type pdf)
 <use Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: Housing-Market-Report_files/figure-latex/unnamed-chunk
--3-1.pdf  used on input line 245.
+-3-1.pdf  used on input line 246.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[2]
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 303.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 304.
 
 [3 <./Housing-Market-Report_files/figure-latex/unnamed-chunk-3-1.pdf>]
-Overfull \hbox (14.34491pt too wide) in paragraph at lines 335--374
+Overfull \hbox (14.34491pt too wide) in paragraph at lines 336--375
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 376--378
+Underfull \hbox (badness 10000) in paragraph at lines 377--379
 
  []
 
@@ -717,15 +717,15 @@ File: Housing-Market-Report_files/figure-latex/unnamed-chunk-6-1.pdf Graphic fi
 le (type pdf)
 <use Housing-Market-Report_files/figure-latex/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: Housing-Market-Report_files/figure-latex/unnamed-chunk
--6-1.pdf  used on input line 406.
+-6-1.pdf  used on input line 409.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--409
+Underfull \hbox (badness 10000) in paragraph at lines 409--412
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--409
+Underfull \hbox (badness 10000) in paragraph at lines 409--412
 
  []
 
@@ -760,7 +760,7 @@ ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/elric/AppData/Ro
 aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/elric/AppDa
 ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/elric/
 AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on Housing-Market-Report.pdf (7 pages, 244116 bytes).
+Output written on Housing-Market-Report.pdf (7 pages, 244108 bytes).
 PDF statistics:
  181 PDF objects out of 1000 (max. 8388607)
  154 compressed objects within 2 object streams
