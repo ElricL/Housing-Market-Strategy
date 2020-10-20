@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.19)  19 OCT 2020 18:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.19)  19 OCT 2020 21:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -741,7 +741,7 @@ Here is how much of TeX's memory you used:
  28002 multiletter control sequences out of 15000+600000
  585083 words of font info for 70 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,11n,72p,255b,409s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 66i,11n,72p,255b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.e
 nc}{c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hsy.enc}{c:/Users/elric/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
@@ -760,7 +760,7 @@ ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/elric/AppData/Ro
 aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/elric/AppDa
 ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/elric/
 AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on Housing-Market-Report.pdf (7 pages, 243405 bytes).
+Output written on Housing-Market-Report.pdf (7 pages, 244116 bytes).
 PDF statistics:
  181 PDF objects out of 1000 (max. 8388607)
  154 compressed objects within 2 object streams
