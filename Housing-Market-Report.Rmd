@@ -176,9 +176,9 @@ __Figure 3:__ Bar graph of number of house owners based on family income. \
 
 ## Next Steps
 |       We notice that the p-value of the intercept is pretty large. So a test comparing the mean of own_or_not with 0 is necessary. 
+|       Another step we would need to take is to look into the edge cases mentioned in the weaknesses section. Due to the complexity and the fact that we currently do not have a grasp of the amount of common cases there are various surveys will need to be performed to have a better understanding. Depending on the results obtained, we could perform a similar model.
 |       As previously mentioned there's the possibility of lurking variables that we have yet to observe. Therefore a similar analysis will need to be conducted on various other datasets outside of GSS.
 |       The data and the analysis performed is a summarization of Canada as a whole. While this is an important start, the housing market varies in different geological areas around Canada. To look into this we would need to perform a different model in the spirit of stratified sampling where we would need to analyze the likelihood of place ownership in different regions.
-|       Another step we would need to take is to look into the edge cases mentioned in the weaknesses section. Due to the complexity and the fact that we currently do not have a grasp of the amount of common cases there are various surveys will need to be performed to have a better understanding. Depending on the results obtained, we could perform a similar model.
 |       As a result of the current pandemic in Canada and the whole world and its effect in today’s climate, this study would need to be repeated again in an updated General Social Survey on Family Data in 2020.
 
 
